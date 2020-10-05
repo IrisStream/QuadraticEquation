@@ -4,7 +4,7 @@ import random
 def map(x, min1, max1, min2, max2):
     return (x-min1)/(max1-min1)*max2
 
-eps = 0.01
+eps = 0.00001
 
 class Population:
     def __init__(self, mutationRate, eq, num):

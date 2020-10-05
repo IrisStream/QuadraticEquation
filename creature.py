@@ -13,32 +13,37 @@ def bitsToFloat(num):
 
 class Creature:
     def __init__(self, eq):
-        self.adn = '00000000000000000000000000000000'
+        self.adn = ''
         self.fitness = 0.0
         self.eq = eq
         for i in range(32):
-            self.adn[i] = random.choice(['0','1'])
+            self.adn += random.choice(['0','1'])
     
     def getNum(self):
         return bitsToFloat(self.adn)
 
     def computeFitness(self):
-        return abs(self.eq.computeValue(self.getNum()))        
+        self.fitness = abs(self.eq.computeValue(self.getNum()))        
 
     def getBits(self):
         return self.adn
 
     def crossover(self,partner):
-        child = Creature(eq)
+        child = Creature(self.eq)
         midPoint = random.randrange(0,32)
+        child.adn = ''
         for i in range(32):
             if(i < midPoint):
-                child.adn[i] = self.adn[i]
+                child.adn += self.adn[i]
             else:
-                child.adn[i] = partner.adn[i]
+                child.adn += partner.adn[i]
         return child
 
     def mutate(self, mutationRate):
+        adn = ''
         for i in range(32):
             if(random.random() < mutationRate):
-                self.adn[i] = random.choice(['0','1'])
+                adn += random.choice(['0','1'])
+            else:
+                adn += self.adn[i]
+        self.adn = adn
